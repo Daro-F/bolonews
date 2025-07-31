@@ -58,6 +58,7 @@ class Article
     {
         $this->commentaires = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int

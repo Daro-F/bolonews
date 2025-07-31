@@ -23,6 +23,7 @@
 header {
     font-family: 'Playfair Display', serif;
     padding: 1rem 0;
+    color: #0f0f0f;
 }
 
 .container {
@@ -36,7 +37,7 @@ header {
 .logo a {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #000;
+    color: #0f0f0f;
     text-decoration: none;
     font-family: 'Georgia', 'Times New Roman', serif;
 }
@@ -49,7 +50,7 @@ nav a,
 .authentification a {
     margin-left: 2rem;
     text-decoration: none;
-    color: #333;
+    color: #0f0f0f;
     font-size: 1.8rem;
     font-weight: bold;
 }
@@ -73,7 +74,7 @@ nav a,
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     margin-top: 8px;
-    color: #000;
+    color: #0f0f0f;
     letter-spacing: 0.03em;
 }
 
@@ -82,7 +83,73 @@ nav a,
     display: block;
     width: 100%;
     height: 3px;
-    background-color: #000;
+    background-color: #0f0f0f;
     margin: 1rem auto 0 auto;
+}
+
+/******************** FORMULAIRE *********************/
+
+.form-container {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
+form {
+    width: 90%;
+    text-align: left;
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+form label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #0f0f0f;
+}
+
+.form-check {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+form input[type="text"],
+form textarea,
+form input[type="file"],
+form input[type="email"],
+form input[type="password"],
+form select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form textarea {
+    min-height: 120px;
+    resize: none;
+}
+
+form button,
+form input[type="submit"] {
+    background-color: #0f0f0f;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 100%;
 }
 
