@@ -4,16 +4,17 @@
         <meta charset="UTF-8">
         <title>{% block title %}Bolonews{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     </head>
 
     <body>
         <header>
             <div class="container">
                 <div class="logo">
-                    <a href="{{ path('app') }}">Bolonews</a>
+                    <a href="{{ path('app_') }}">Bolonews</a>
                 </div>
                 <nav>
-                    <a href="{{ path('app') }}">Home</a>
+                    <a href="{{ path('app_') }}">Home</a>
                     <a href="{{ path('app_articles') }}">Articles</a>
                     <a href="{{ path('app_contact') }}">Contact</a>
                 </nav>

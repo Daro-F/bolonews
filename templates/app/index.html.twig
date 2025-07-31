@@ -3,6 +3,46 @@
 {% block title %}Accueil - Bolonews{% endblock %}
 
 {% block body %}
+    <div class="container-card">
+        <h2>A la une !</h2>
 
+    {% for article in articles %}
 
+            <div class="container-article">
+                <div class="article-card">
+                    <img src="{{ asset('images/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+                </div>
+        
+
+                <div class="article-content">
+                    <span class="badge">{{ article.categorie.libelle }}</span>
+
+                    <h3>{% if article.titre|length > 84 %}
+                            {{ article.titre|slice(0, 83) ~ '...' }}
+                        {% else %}
+                            {{ article.titre }}
+                        {% endif %}
+                    </h3>
+                    <p>{{ article.chapeau|slice(0, 120) ~ '...' }}</p>
+
+                    <div class="article-infos">
+                        <div class="author">
+                            <img src="/images/avatar-placeholder.png" class="avatar">
+                            {{ article.auteur.pseudo }}
+                        </div>
+                        <div class="stats">
+                            <small>publié le {{ article.createdAt|date('d-m-Y à H:i') }}</small>
+                            <div class="stats-icon">
+                                <span> {{ article.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
+                                <span> {{ article.likes|length }} <i class="fa-regular fa-heart"></i>
+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>Aucun article pour le moment.</p>
+    {% endfor %}
 {% endblock %}

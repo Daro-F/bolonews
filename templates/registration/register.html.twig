@@ -7,7 +7,14 @@
         <h1>Créer un compte</h1>
 
         {{ form_start(form) }}
-            {{ form_widget(form) }}
+            {{ form_row(form.email) }}
+
+            <div>
+                {{ form_label(form.password, 'Mot de passe') }}
+                {{ form_widget(form.password) }}
+            </div>
+
+            {{ form_row(form.pseudo) }}
             <button type="submit">S'inscrire</button>
         {{ form_end(form) }}
     </div>
