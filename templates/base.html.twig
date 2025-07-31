@@ -19,8 +19,13 @@
                     <a href="{{ path('app_contact') }}">Contact</a>
                 </nav>
                 <div class="authentification">
-                <a href="{{ path('app_login') }}">Se connecter</a>
-                <a href="{{ path('app_register') }}">M'inscrire</a>
+                    {% if app.user %}
+                        <a href="{{ path('app_profil') }}"><i class="far fa-user"></i> Profil</a>
+                        <a href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Se connecter</a>
+                        <a href="{{ path('app_register') }}">M'inscrire</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="title">
