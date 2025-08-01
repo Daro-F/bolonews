@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil - Bolonews{% endblock %}
+
+{% block body %}
+
+<section>
+    <h2 class="profil-title">Mes articles publiés</h2>
+    <div class="articles-grid">
+        {% for article in articlesPublies %}
+            <div class="article-card">
+                <div class="article-image">
+                    <img src="{{ asset('images/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+                </div>
+
+                <div class="article-details">
+                    <span class="badge">{{ article.categorie.libelle }}</span>
+                    <div class="article-title-info">
+                        <h3>{{ article.titre|slice(0, 35) ~ '...' }}</h3>
+                        <p>{{ article.auteur.pseudo }}</p>
+                        <small>publié le {{ article.createdAt|date('d-m-Y à H:i') }}</small>
+                    </div>
+
+                    <div class="article-texte">
+                        <a href="{{ path('app_article', { id: article.id }) }}">
+                            <p>{{ article.chapeau|slice(0, 100) ~ '...' }}</p>
+                            <p>Lire la suite <i class="fas fa-arrow-right"></i></p>
+                        </a>
+                    </div>
+
+                    <div class="article-infos">
+                        <span>{{ article.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
+                        <span>{{ article.likes|length }} <i class="fa-regular fa-heart"></i></span>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="no-article">
+                <p>Aucun article publié pour le moment.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section>
+    <h2 class="profil-title">Mes articles non publiés</h2>
+    <div class="articles-grid">
+        {% for article in articlesNonPublies %}
+            <div class="article-card">
+                <div class="article-image">
+                    <img src="{{ asset('images/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+                </div>
+
+                <div class="article-details">
+                    <span class="badge">{{ article.categorie.libelle }}</span>
+                    <div class="article-title-info">
+                        <h3>{{ article.titre|slice(0, 35) ~ '...' }}</h3>
+                        <p>{{ article.auteur.pseudo }}</p>
+                        <small>Brouillon créé le {{ article.createdAt|date('d-m-Y à H:i') }}</small>
+                    </div>
+
+                    <div class="article-texte">
+                        <a href="{{ path('app_article_edit', { id: article.id }) }}">
+                            <p>{{ article.chapeau|slice(0, 100) ~ '...' }}</p>
+                            <p>Modifier <i class="fas fa-pen"></i></p>
+                        </a>
+                    </div>
+
+                    <div class="article-infos">
+                        <span>{{ article.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
+                        <span>{{ article.likes|length }} <i class="fa-regular fa-heart"></i></span>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="no-article">
+                <p>Aucun article en brouillon pour le moment.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

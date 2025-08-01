@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\SearchType;
 use App\Form\ArticleType;
+use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 final class ArticleController extends AbstractController
 {
@@ -42,6 +45,36 @@ final class ArticleController extends AbstractController
         return $this->render('article/new.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
 
+    #[Route('/', name: 'app_')]
+    public function index(Request $request, ArticleRepository $articleRepository)
+    {
+        // Création du formulaire de recherche
+        $form = $this->createForm(SearchType::class);
+        
+        // Traitement de la requête
+        $form->handleRequest($request);
+
+        // Valeur par défaut : on récupère tous les articles
+        $articles = $articleRepository->findAll();
+
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            // On récupère la donnée du champ 'q'
+            $data = $form->getData();
+            $query = $data['q'];
+
+            // Si le champ n'est pas vide, on effectue la recherche
+            if (!empty($query)) {
+                $articles = $articleRepository->searchByTerm($query);
+            }
+        }
+
+        // On renvoie la vue avec les articles (filtrés ou non) et le formulaire
+        return $this->render('app/index.html.twig', [
+            'articles' => $articles,
+            'form' => $form->createView(),
+        ]);
     }
 }
