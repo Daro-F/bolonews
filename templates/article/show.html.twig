@@ -4,7 +4,16 @@
 
 {% block body %}
 <div class="article-detail-container">
-    <span class="badge badge-article">{{ article.categorie.libelle }}</span>
+    <div class="detail-edit">
+        <span class="badge badge-article">{{ article.categorie.libelle }}</span>
+
+        {# Si l'utilisateur est connecté il peut éditer son article #}
+        {% if app.user and article.auteur == app.user %}
+            <a href="{{ path('app_article_edit', { id: article.id }) }}">
+                <p>Editer <i class="fas fa-arrow-right"></i></p>
+            </a>
+        {% endif %}
+    </div>
 
     <h1>{{ article.titre }}</h1>
 

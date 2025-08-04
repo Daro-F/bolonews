@@ -4,18 +4,15 @@
 
 {% block body %}
 
-        {% if app.user %}
-        <div class='new-recherche-bar'>
-            <div class="recherche-a">
-                <a href=""><i class="fas fa-pen"></i>Editer un article</a>
-            </div>
-        {% else %}
-            <div>
-                <a href=""></a>
-            </div>
-        {% endif %}
+    <div class="new-recherche-bar">
+        <div class="recherche-a">
+            {% if app.user %}
+                <a href="#"><i class="fas fa-pen"></i>Éditer un article</a>
+            {% else %}
+                <span class="placeholder-link"></span>
+            {% endif %}
+        </div>
 
-        {# Formulaire de recherche #}
         {% if form is defined %}
             <div class="search-bar-container">
                 {{ form_start(form, { attr: { class: 'search-form' } }) }}
@@ -31,23 +28,20 @@
                         <button type="submit"><i class="fas fa-search"></i></button>
                     </div>
                 {{ form_end(form) }}
-            </div>    
-
+            </div>
         {% endif %}
 
-        {# Ajouter un article (visible seulement si connecté) #}
-        {% if app.user %}
-            <div class="new-a">
+        <div class="new-a">
+            {% if app.user %}
                 <a href="{{ path('article_new') }}"><i class="fas fa-plus"></i>Ajouter un article</a>
-            </div>
-        {% else %}
-            <div>
-                <a href=""></a>
-            </div>
-        {% endif %}
+            {% else %}
+                <span class="placeholder-link"></span>
+            {% endif %}
         </div>
+    </div>
 
-     <div class='mini-card-container'>
+
+    <div class='mini-card-container'>
         {% for article in articles %}
             <div class="mini-card">
                 <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.titre }}">

@@ -244,6 +244,19 @@ h4 {
     margin: 0 2rem;
 }
 
+.detail-edit {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail-edit a p {
+    font-size: 1rem;
+    font-style: italic;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background-color: #b4b4b4;
+}
+
 /******* ARTICLES A LA UNE *******/
 
 .container-featured {

@@ -20,7 +20,7 @@
                     <div class="featured-article">
                         <div class="container-article">
                             <div class="article-card">
-                                <img src="{{ asset('images/articles/' ~ featured.image) }}" alt="{{ featured.titre }}">
+                                <img src="{{ asset('uploads/images/' ~ featured.image) }}" alt="{{ featured.titre }}">
                             </div>
 
                             {# Titre + chapeau de l'article #}
@@ -70,6 +70,9 @@
                                 <span class="badge">{{ article.categorie.libelle }}</span>
                                 <h3>{{ article.titre|length > 60 ? article.titre|slice(0, 59) ~ '...' : article.titre }}</h3>
                                 <p>{{ article.chapeau|slice(0, 80) ~ '...' }}</p>
+                                <a href="{{ path('app_article_show', { id: article.id }) }}">
+                                    <p>Lire la suite <i class="fas fa-arrow-right"></i></p>
+                                </a>
 
                                 <div class="mini-infos">
                                     <small>{{ article.auteur.pseudo }} - {{ article.createdAt|date('d-m-Y à H:i') }}</small>

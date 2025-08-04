@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvel Article{% endblock %}
+{% block title %}Modifier l’article{% endblock %}
 
 {% block body %}
-    <div class="form-container">
-        <h3>Créer un nouvel article</h3>
+    <h2>Modifier l'article : {{ article.titre }}</h2>
 
-        {{ form_start(form) }}
+    {{ form_start(form) }}
             {{ form_row(form.titre) }}
             {{ form_row(form.chapeau) }}
             {{ form_row(form.contenu) }}
@@ -18,8 +17,10 @@
             </div>
 
             {{ form_row(form.categorie) }}
+        <button class="btn btn-primary">Enregistrer les modifications</button>
+    {{ form_end(form) }}
 
-            <button type="submit">Publier</button>
-        {{ form_end(form) }}
-    </div>
+    <p>
+        <a href="{{ path('app_article_show', { id: article.id }) }}">← Retour à l'article</a>
+    </p>
 {% endblock %}
