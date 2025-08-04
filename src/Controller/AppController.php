@@ -38,7 +38,7 @@ final class AppController extends AbstractController
         return $this->render('user/profil.html.twig');
     }
 
-    #[Route('/article/{id}', name: 'app_article_show')]
+    #[Route('/article/show/{id}', name: 'app_article_show')]
     public function show(Article $article): Response
     {
         return $this->render('article/show.html.twig', [

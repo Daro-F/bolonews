@@ -341,11 +341,11 @@ h4 {
     width: 700px;
 }
 
-.article-image {
+.article-image-profil {
     height: 100%;
 }
 
-.article-image img {
+.article-image-profil img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -404,4 +404,134 @@ h4 {
 .no-article p {
     font-size: 1.5rem;
     color: #0f0f0f;
+}
+
+/******************** PAGE ARTICLE *********************/
+.article-detail-container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.badge-article {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+}
+
+
+.article-detail-container h1 {
+    font-size: 2rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.meta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.chapeau {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.article-image {
+    text-align: center;
+    margin: 1rem;
+}
+
+.article-image img {
+    width: 60%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.article-content p {
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #333;
+}
+
+.article-reactions {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #888;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.article-reactions i {
+    margin-left: 5px;
+}
+
+.comments-section {
+    margin-top: 40px;
+}
+
+.comments-section h2,
+.comments-section h3 {
+    margin-top: 30px;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.comment-box {
+    border-left: 3px solid #3d3d3d;
+    border-right: 3px solid #3d3d3d;
+    padding-left: 15px;
+    margin-bottom: 20px;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.comment-box strong {
+    color: #222;
+}
+
+.comment-box small {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/************ FORMULAIRE DE COMMENTAIRE ************/
+.comment-form {
+    background-color: #fff7f7;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(229, 75, 75, 0.3);
+    margin-top: 2rem;
+    max-width: 100%;
+}
+
+.comment-form input,
+.comment-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border: 1px solid #e0dada;
+    border-radius: 6px;
+    background-color: #fff;
+    resize: none;
+}
+
+.comment-submit {
+    color: white;
+    font-weight: bold;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.comment-submit:hover {
+    background-color: #484848;
 }

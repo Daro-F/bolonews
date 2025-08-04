@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\SearchType;
 use App\Form\ArticleType;
+use App\Entity\Commentaire;
+use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,9 +39,16 @@ final class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!$this->getUser()) {
+                throw $this->createAccessDeniedException('Vous devez être connecté pour créer un article.');
+            }
+
+            $article->setAuteur($this->getUser());
+            $article->setCreatedAt(new \DateTime());
+
             $entityManager->persist($article);
             $entityManager->flush();
-            return $this->redirectToRoute('app');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('article/new.html.twig', [
@@ -47,7 +56,7 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'app_')]
+    #[Route('/articles/list', name: 'article_index')]
     public function index(Request $request, ArticleRepository $articleRepository)
     {
         // Création du formulaire de recherche
@@ -75,6 +84,37 @@ final class ArticleController extends AbstractController
         return $this->render('app/index.html.twig', [
             'articles' => $articles,
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/article/show/{id}', name: 'app_article_show')]
+    public function show(
+        Article $article,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!$this->getUser()) {
+                throw $this->createAccessDeniedException('Vous devez être connecté pour commenter.');
+            }
+
+            $commentaire->setAuteur($this->getUser());
+            $commentaire->setArticle($article);
+            $commentaire->setCreatedAt(new \DateTime());
+
+            $entityManager->persist($commentaire);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_article_show', ['id' => $article->getId()]);
+        }
+
+        return $this->render('article/show.html.twig', [
+            'article' => $article,
+            'commentForm' => $form->createView(),
         ]);
     }
 }

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.titre }} - Bolonews{% endblock %}
+
+{% block body %}
+<div class="article-detail-container">
+    <span class="badge badge-article">{{ article.categorie.libelle }}</span>
+
+    <h1>{{ article.titre }}</h1>
+
+    <p class="meta">
+        <small>
+            Publié le {{ article.createdAt|date('d/m/Y à H:i') }} par {{ article.auteur.pseudo }}
+        </small>
+    </p>
+
+    <p class="chapeau">{{ article.chapeau }}</p>
+
+    <div class="article-image">
+        <img src="{{ asset('images/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+    </div>
+
+    <div class="article-content">
+        <p>{{ article.contenu }}</p>
+    </div>
+
+    <div class="article-reactions">
+        <span>{{ article.auteur.pseudo }}</span>
+        <div>
+            <span>{{ article.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
+            <span>{{ article.likes|length }} <i class="fa-regular fa-heart"></i></span>
+        </div>
+    </div>
+
+    <hr>
+
+    <section class="comments-section">
+        <h2>Commentaires :</h2>
+
+        {% for commentaire in article.commentaires %}
+            <div class="comment-box">
+                <strong>{{ commentaire.auteur.pseudo }}</strong>
+                <p>{{ commentaire.contenu }}</p>
+                <small>Posté le {{ commentaire.createdAt|date('d/m/Y à H:i') }}</small>
+            </div>
+        {% else %}
+            <p>Aucun commentaire pour le moment.</p>
+        {% endfor %}
+
+        <h3>Ajouter un commentaire :</h3>
+        {% if app.user %}
+            {{ form_start(commentForm, {'attr': {'class': 'comment-form'}}) }}
+                {{ form_widget(commentForm) }}
+                <button type="submit" class="comment-submit">Envoyer</button>
+            {{ form_end(commentForm) }}
+        {% else %}
+            <p><a href="{{ path('app_login') }}">Connecte-toi</a> pour commenter.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
