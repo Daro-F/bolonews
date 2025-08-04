@@ -4,87 +4,131 @@
 
 {% block body %}
 
-<div class='main-profil-container'>
-    <div class='new-recherche-bar'>
-        {% if app.user %}
-            <div class="recherche-a">
-                <a href=""><i class="fas fa-pen"></i>Editer un article</a>
-            </div>
-        {% else %}
+    {# --- Barre de recherche et actions utilisateur --- #}
+    <div class='main-profil-container'>
+        <div class='new-recherche-bar'>
+
+            {# Editer un article (visible seulement si connecté) #}
+            {% if app.user %}
+                <div class="recherche-a">
+                    <a href=""><i class="fas fa-pen"></i>Editer un article</a>
+                </div>
+            {% else %}
+                <div>
+                    <a href=""></a>
+                </div>
+            {% endif %}
+
+            {# Formulaire de recherche #}
+            {% if form is defined %}
+                <div class="search-bar-container">
+                    {{ form_start(form, { method: 'get', attr: { class: 'search-form' } }) }}
+                        <div class="search-field">
+                            {{ form_row(form.q, {
+                                label: false,
+                                attr: {
+                                    placeholder: 'Rechercher un article...',
+                                    class: 'search-input',
+                                    id: 'search-input'
+                                }
+                            }) }}
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            {% endif %}
+
+            {# Ajouter un article (visible seulement si connecté) #}
+            {% if app.user %}
+                <div class="new-a">
+                    <a href=""><i class="fas fa-plus"></i>Ajouter un article</a>
+                </div>
+            {% else %}
             <div>
                 <a href=""></a>
             </div>
-        {% endif %}
-
-        {% if form is defined %}
-            <div class="search-bar-container">
-                {{ form_start(form, { method: 'get', attr: { class: 'search-form' } }) }}
-                    <div class="search-field">
-                        {{ form_row(form.q, {
-                            label: false,
-                            attr: {
-                                placeholder: 'Rechercher un article...',
-                                class: 'search-input',
-                                id: 'search-input'
-                            }
-                        }) }}
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </div>
-                {{ form_end(form) }}
-            </div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="new-a">
-                <a href=""><i class="fas fa-plus"></i>Ajouter un article</a>
-            </div>
-        {% else %}
-        <div>
-            <a href=""></a>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
-</div>
 
-    <div class="container-card">
-        <h4>A la une !</h4>
+    {# --- Contenu principal --- #}
+    <div class="page-container">
+        <section>
 
-    {% for article in articles %}
+            {# -------- ARTICLE À LA UNE -------- #}
+            <div class="container-card">
+                <h4>A la une !</h4>
 
-            <div class="container-article">
-                <div class="article-card">
-                    <img src="{{ asset('images/articles/' ~ article.image) }}" alt="{{ article.titre }}">
-                </div>
-        
-
-                <div class="article-content">
-                    <span class="badge">{{ article.categorie.libelle }}</span>
-
-                    <h3>{% if article.titre|length > 84 %}
-                            {{ article.titre|slice(0, 83) ~ '...' }}
-                        {% else %}
-                            {{ article.titre }}
-                        {% endif %}
-                    </h3>
-                    <p>{{ article.chapeau|slice(0, 120) ~ '...' }}</p>
-
-                    <div class="article-infos">
-                        <div class="author">
-                            <img src="/images/avatar-placeholder.png" class="avatar">
-                            {{ article.auteur.pseudo }}
+                {# Récupération du premier article #}
+                {% set featured = articles|first %}
+                <div class="featured-article">
+                    <div class="container-article">
+                        <div class="article-card">
+                            <img src="{{ asset('images/articles/' ~ featured.image) }}" alt="{{ featured.titre }}">
                         </div>
-                        <div class="stats">
-                            <small>publié le {{ article.createdAt|date('d-m-Y à H:i') }}</small>
-                            <div class="stats-icon">
-                                <span> {{ article.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
-                                <span> {{ article.likes|length }} <i class="fa-regular fa-heart"></i></span>
+
+                        {# Titre + chapeau de l'article #}
+                        <div class="article-content">
+                            <span class="badge">{{ featured.categorie.libelle }}</span>
+                            <h3>{{ featured.titre|length > 84 ? featured.titre|slice(0, 83) ~ '...' : featured.titre }}</h3>
+                            <p>{{ featured.chapeau|slice(0, 120) ~ '...' }}</p>
+
+                            {# Lien vers la page détail de l’article #}
+                            <a href="{{ path('app_article_show', { id: featured.id }) }}">
+                                <p>Lire la suite <i class="fas fa-arrow-right"></i></p>
+                            </a>
+
+                            {# Auteur + compteur like et commentaire #}
+                            <div class="article-infos">
+                                <div class="author">
+                                    <img src="/images/avatar-placeholder.png" class="avatar">
+                                    {{ featured.auteur.pseudo }}
+                                </div>
+                                <div class="stats">
+                                    <small>publié le {{ featured.createdAt|date('d-m-Y à H:i') }}</small>
+                                    <div class="stats-icon">
+                                        <span> {{ featured.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
+                                        <span> {{ featured.likes|length }} <i class="fa-regular fa-heart"></i></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <p>Aucun article pour le moment.</p>
-    {% endfor %}
+        </section>
+
+
+        {# -------- AUTRE ARTICLES -------- #}
+        {% if articles|length > 1 %}
+            <section>
+                <h4>Dernières parutions</h4>
+
+                <div class="latest-articles-grid">
+
+                    {# On ignore le premier article (déjà utilisé) avec slice(1) #}
+                    {% for article in articles|slice(1) %}
+                    
+                        <div class="mini-card">
+                            <img src="{{ asset('images/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+                            <span class="badge">{{ article.categorie.libelle }}</span>
+                            <h3>{{ article.titre|length > 60 ? article.titre|slice(0, 59) ~ '...' : article.titre }}</h3>
+                            <p>{{ article.chapeau|slice(0, 80) ~ '...' }}</p>
+
+                            <div class="mini-infos">
+                                <small>{{ article.auteur.pseudo }} - {{ article.createdAt|date('d-m-Y à H:i') }}</small>
+
+                                <div class="stats-icon">
+                                    <span> {{ article.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
+                                    <span> {{ article.likes|length }} <i class="fa-regular fa-heart"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+    </div>
+
+
 {% endblock %}

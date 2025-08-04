@@ -171,8 +171,13 @@ h2 {
 }
 
 /******************** CARD ARTICLE *********************/
-.container-card {
+.page-container {
     width: 70%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.container-card {
     margin: auto;
 }
 
@@ -213,8 +218,9 @@ h4 {
 .badge {
     align-self: flex-start;
     background-color: #b4b4b4;
-    padding: 0 0.5rem;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    padding: 4px 8px;
+    border-radius: 12px;
 }
 
 .article-infos {
@@ -236,6 +242,88 @@ h4 {
 
 .stats-icon span {
     margin: 0 2rem;
+}
+
+/******* ARTICLES A LA UNE *******/
+
+.container-featured {
+    width: 70%;
+    margin: 0 auto 4rem auto;
+}
+
+.featured-article {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+/******* DERNIÈRES PARUTIONS *******/
+
+.latest-articles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    margin: 0 auto 4rem auto;
+}
+
+.mini-card {
+    border: 1px solid #e0e0e0;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease;
+}
+
+.mini-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mini-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 0.8rem;
+}
+
+.mini-card .badge {
+    background-color: #e0e0e0;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    align-self: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.mini-card h3 {
+    font-size: 1.2rem;
+    margin: 0.3rem 0;
+    font-weight: bold;
+    color: #111;
+    line-height: 1.3;
+}
+
+.mini-card p {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.mini-infos {
+    margin-top: auto;
+    font-size: 0.75rem;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mini-infos .stats-icon span {
+    margin-left: 1rem;
 }
 
 /******************** PROFIL UTILISATEUR *********************/
