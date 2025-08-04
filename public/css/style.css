@@ -249,7 +249,7 @@ h4 {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin: 2rem 0;
+    margin-bottom: 2rem;
 }
 
 .recherche-a,

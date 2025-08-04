@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class AppController extends AbstractController
 {
-    #[Route('/', name: 'app_')]
+    #[Route('/', name: 'app_home')]
     public function index(ArticleRepository $articleRepository): Response
     {
         $articles = $articleRepository->findAll();
@@ -32,25 +32,13 @@ final class AppController extends AbstractController
         return $this->render('app/contact.html.twig');
     }
 
-    #[Route('/login', name: 'app_login')]
-    public function login():Response
-    {
-        return $this->render('app/login.html.twig');
-    }
-
-    #[Route('/register', name: 'app_register')]
-    public function register():Response
-    {
-        return $this->render('app/register.html.twig');
-    }
-
     #[Route('/profil', name: 'app_profil')]
     public function profil(): Response
     {
         return $this->render('user/profil.html.twig');
     }
 
-    #[Route('/article/{id}', name: 'app_article')]
+    #[Route('/article/{id}', name: 'app_article_show')]
     public function show(Article $article): Response
     {
         return $this->render('article/show.html.twig', [

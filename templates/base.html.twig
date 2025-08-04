@@ -32,48 +32,6 @@
                 <h1>Bolonews</h1>
                 <p>Les meilleures sauces pour les pâtes et de l'actualité sur le grill</p>
             </div>
-
-            <div class='main-profil-container'>
-                <div class='new-recherche-bar'>
-                    {% if app.user %}
-                        <div class="recherche-a">
-                            <a href=""><i class="fas fa-pen"></i>Editer un article</a>
-                        </div>
-                    {% else %}
-                        <div>
-                            <a href=""></a>
-                        </div>
-                    {% endif %}
-
-                    {% if form is defined %}
-                        <div class="search-bar-container">
-                            {{ form_start(form, { method: 'get', attr: { class: 'search-form' } }) }}
-                                <div class="search-field">
-                                    {{ form_row(form.q, {
-                                        label: false,
-                                        attr: {
-                                            placeholder: 'Rechercher un article...',
-                                            class: 'search-input',
-                                            id: 'search-input'
-                                        }
-                                    }) }}
-                                    <button type="submit"><i class="fas fa-search"></i></button>
-                                </div>
-                            {{ form_end(form) }}
-                        </div>
-                    {% endif %}
-
-                    {% if app.user %}
-                        <div class="new-a">
-                            <a href=""><i class="fas fa-plus"></i>Ajouter un article</a>
-                        </div>
-                    {% else %}
-                    <div>
-                        <a href=""></a>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
             
         </header>
         {% block body %}{% endblock %}
