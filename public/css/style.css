@@ -326,6 +326,14 @@ h4 {
     margin-left: 1rem;
 }
 
+/******* LISTE MINI CARD *******/
+.mini-card-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    margin: 0 auto 4rem auto;
+    max-width: 1600px;
+}
 /******************** PROFIL UTILISATEUR *********************/
 
 /******* BAR DE RECHERCHE *******/
@@ -431,6 +439,7 @@ h4 {
 
 .article-image-profil {
     height: 100%;
+    width: 600px;
 }
 
 .article-image-profil img {

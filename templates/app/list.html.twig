@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Bolonews{% endblock %}
+
+{% block body %}
+
+        {% if app.user %}
+        <div class='new-recherche-bar'>
+            <div class="recherche-a">
+                <a href=""><i class="fas fa-pen"></i>Editer un article</a>
+            </div>
+        {% else %}
+            <div>
+                <a href=""></a>
+            </div>
+        {% endif %}
+
+        {# Formulaire de recherche #}
+        {% if form is defined %}
+            <div class="search-bar-container">
+                {{ form_start(form, { attr: { class: 'search-form' } }) }}
+                    <div class="search-field">
+                        {{ form_row(form.q, {
+                            label: false,
+                            attr: {
+                                placeholder: 'Rechercher un article...',
+                                class: 'search-input',
+                                id: 'search-input'
+                            }
+                        }) }}
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                {{ form_end(form) }}
+            </div>    
+
+        {% endif %}
+
+        {# Ajouter un article (visible seulement si connecté) #}
+        {% if app.user %}
+            <div class="new-a">
+                <a href="{{ path('article_new') }}"><i class="fas fa-plus"></i>Ajouter un article</a>
+            </div>
+        {% else %}
+            <div>
+                <a href=""></a>
+            </div>
+        {% endif %}
+        </div>
+
+     <div class='mini-card-container'>
+        {% for article in articles %}
+            <div class="mini-card">
+                <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.titre }}">
+                <span class="badge">{{ article.categorie.libelle }}</span>
+                <h3>{{ article.titre|length > 60 ? article.titre|slice(0, 59) ~ '...' : article.titre }}</h3>
+                <p>{{ article.chapeau|slice(0, 80) ~ '...' }}</p>
+                <a href="{{ path('app_article_show', { id: article.id }) }}">
+                    <p>Lire la suite <i class="fas fa-arrow-right"></i></p>
+                </a>
+                <div class="mini-infos">
+                    <small>{{ article.auteur.pseudo }} - {{ article.createdAt|date('d-m-Y à H:i') }}</small>
+
+                    <div class="stats-icon">
+                        <span> {{ article.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
+                        <span> {{ article.likes|length }} <i class="fa-regular fa-heart"></i></span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

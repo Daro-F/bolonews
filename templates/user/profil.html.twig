@@ -52,7 +52,7 @@
         {% for article in articlesPublies %}
             <div class="article-card">
                 <div class="article-image-profil">
-                    <img src="{{ asset('images/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+                    <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.titre }}">
                 </div>
 
                 <div class="article-details">
@@ -89,8 +89,8 @@
     <div class="articles-grid">
         {% for article in articlesNonPublies %}
             <div class="article-card">
-                <div class="article-image">
-                    <img src="{{ asset('images/articles/' ~ article.image) }}" alt="{{ article.titre }}">
+                <div class="article-image-profil">
+                    <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{ article.titre }}">
                 </div>
 
                 <div class="article-details">

@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Article;
 use App\Entity\Categorie;
 use App\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +23,19 @@ class ArticleType extends AbstractType
             ->add('published', null, [
             'label' => 'Rendre public'
             ])
+            ->add('image', FileType::class, [
+                'label' => 'Image de l article',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
+                        'mimeTypesMessage' => 'Veuillez uploader une image JPG, PNG ou WebP valide.',
+                    ])
+                ],
+            ])
+
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'id',

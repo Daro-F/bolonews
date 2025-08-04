@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\SearchType;
 use App\Repository\ArticleRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,17 +22,12 @@ final class AppController extends AbstractController
         ]);
     }
 
-    #[Route('/articles', name: 'app_articles')]
-    public function articles():Response
+    #[Route('/contact', name: 'app_contact')]
+    public function contact(): Response
     {
-        return $this->render('app/articles.html.twig');
+        return $this->render('contact/index.html.twig');
     }
 
-    #[Route('/contact', name: 'app_contact')]
-    public function contact():Response
-    {
-        return $this->render('app/contact.html.twig');
-    }
 
     #[Route('/profil', name: 'app_profil')]
     public function profil(): Response
@@ -46,5 +43,33 @@ final class AppController extends AbstractController
         ]);
     }
 
+    #[Route('/list', name: 'app_list')]
+    public function list(Request $request, ArticleRepository $articleRepository)
+    {
+        // Création du formulaire de recherche
+        $form = $this->createForm(SearchType::class);
+        
+        // Traitement de la requête
+        $form->handleRequest($request);
+       
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            // On récupère la donnée du champ 'q'
+            $data = $form->getData();
+            $query = $data['q'];
 
+            // Si le champ n'est pas vide, on effectue la recherche
+            if (!empty($query)) {
+                $articles = $articleRepository->searchByTerm($query);
+            }
+        } else {
+            $articles = $articleRepository->findAll();
+        }
+
+        // On renvoie la vue avec les articles (filtrés ou non) et le formulaire
+        return $this->render('app/list.html.twig', [
+            'articles' => $articles,
+            'form' => $form->createView(),
+        ]);
+    }
 }
