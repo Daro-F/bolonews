@@ -19,6 +19,10 @@
     font-style: normal;
 }
 
+html {
+    color: #474747;
+}
+
 body {
     width: 90%;
     margin: auto;
@@ -99,7 +103,6 @@ nav a,
 
 .form-container {
     margin: 2rem auto 0;
-    text-align: center;
 }
 
 form {
@@ -109,7 +112,6 @@ form {
     padding: 2rem;
     background-color: #f9f9f9;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     font-family: 'Georgia', 'Times New Roman', serif;
 }
 
@@ -644,4 +646,39 @@ h4 {
 
 .comment-submit:hover {
     background-color: #484848;
+}
+
+.form-like {
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+.btn-like {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.btn-like .fa-heart {
+    font-size: 1.2rem;
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+.btn-like:hover .fa-heart,
+.btn-like:hover .like-count {
+    color: #e60023;
+}
+
+.liked {
+    color: #e60023 !important;
+}
+
+.like-count {
+    transition: color 0.3s ease;
 }

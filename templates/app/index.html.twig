@@ -44,7 +44,7 @@
                                         <small>publié le {{ featured.createdAt|date('d-m-Y à H:i') }}</small>
                                         <div class="stats-icon">
                                             <span> {{ featured.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
-                                            <span> {{ featured.likes|length }} <i class="fa-regular fa-heart"></i></span>
+                                            <span class="liked"> {{ featured.likes|length }} <i class="fa-solid fa-heart liked"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
 
                                     <div class="stats-icon">
                                         <span> {{ article.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
-                                        <span> {{ article.likes|length }} <i class="fa-regular fa-heart"></i></span>
+                                        <span class="liked"> {{ article.likes|length }} <i class="fa-solid fa-heart liked"></i></span>
                                     </div>
                                 </div>
                             </div>

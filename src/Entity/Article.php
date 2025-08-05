@@ -51,7 +51,7 @@ class Article
     /**
      * @var Collection<int, user>
      */
-    #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'likes')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'likes')]
     private Collection $likes;
 
     public function __construct()

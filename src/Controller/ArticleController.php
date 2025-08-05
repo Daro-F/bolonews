@@ -9,12 +9,13 @@ use App\Entity\Commentaire;
 use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 final class ArticleController extends AbstractController
@@ -176,4 +177,25 @@ final class ArticleController extends AbstractController
         ]);
     }
 
+    #[Route('/article/{id}/like', name: 'app_article_like', methods: ['POST'])]
+    public function toggleLike(Article $article, EntityManagerInterface $em, Request $request): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour liker un article.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        if ($article->getLikes()->contains($user)) {
+            $article->removeLike($user);
+        } else {
+            $article->addLike($user);
+        }
+
+        $em->flush();
+
+        // Redirige vers la page précédente (article en cours)
+        return $this->redirect($request->headers->get('referer'));
+    }
 }

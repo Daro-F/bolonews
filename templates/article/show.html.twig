@@ -37,7 +37,16 @@
         <span>{{ article.auteur.pseudo }}</span>
         <div>
             <span>{{ article.commentaires|length }} <i class="fa-regular fa-comment"></i></span>
-            <span>{{ article.likes|length }} <i class="fa-regular fa-heart"></i></span>
+            <form method="post" action="{{ path('app_article_like', { id: article.id }) }}" class="form-like">
+                <button type="submit" class="btn-like" aria-label="Liker l'article">
+                    <span class="like-count">{{ article.likes|length }}</span>
+                    {% if app.user and article.likes.contains(app.user) %}
+                        <i class="fa-solid fa-heart liked"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart"></i>
+                    {% endif %}
+                </button>
+            </form>
         </div>
     </div>
 
